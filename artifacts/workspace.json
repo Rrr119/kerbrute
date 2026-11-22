@@ -1,0 +1,17 @@
+{
+  "root": "/home/dev/feedback/uid34484",
+  "B": "/home/dev/feedback/uid34484",
+  "sha": "6c1c27f0ce2cb483671f864ac9de6b5bbf9e9910",
+  "wslDistro": "Ubuntu-26.04",
+  "source": {
+    "owner": "ropnop",
+    "repo": "kerbrute",
+    "sha": "6c1c27f0ce2cb483671f864ac9de6b5bbf9e9910"
+  },
+  "fork": {
+    "owner": "Rrr119",
+    "repo": "kerbrute",
+    "cloneUrl": "https://github.com/Rrr119/kerbrute.git"
+  },
+  "at": "2026-11-22T16:36:52.045Z"
+}

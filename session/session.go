@@ -47,16 +47,16 @@ type KerbruteSessionOptions struct {
 	SafeMode bool
 	Downgrade bool
 	HashFilename string
-	logger *util.Logger
+	Logger *util.Logger
 }
 
 func NewKerbruteSession(options KerbruteSessionOptions) (k KerbruteSession, err error) {
 	if options.Domain == "" {
 		return k, fmt.Errorf("domain must not be empty")
 	}
-	if options.logger == nil {
+	if options.Logger == nil {
 		logger := util.NewLogger(options.Verbose, "")
-		options.logger = &logger
+		options.Logger = &logger
 	}
 	var hashFile *os.File
 	if options.HashFilename != "" {
@@ -64,9 +64,9 @@ func NewKerbruteSession(options KerbruteSessionOptions) (k KerbruteSession, err 
 		if err != nil {
 			return k, err
 		}
-		options.logger.Log.Infof("Saving any captured hashes to %s", hashFile.Name())
+		options.Logger.Log.Infof("Saving any captured hashes to %s", hashFile.Name())
 		if !options.Downgrade {
-			options.logger.Log.Warningf("You are capturing AS-REPs, but not downgrading encryption. You probably want to downgrade to arcfour-hmac-md5 (--downgrade) to crack them with a user's password instead of AES keys")
+			options.Logger.Log.Warningf("You are capturing AS-REPs, but not downgrading encryption. You probably want to downgrade to arcfour-hmac-md5 (--downgrade) to crack them with a user's password instead of AES keys")
 		}
 	}
 
@@ -75,7 +75,7 @@ func NewKerbruteSession(options KerbruteSessionOptions) (k KerbruteSession, err 
 	Config, err := kconfig.NewFromString(configstring)
 	if options.Downgrade {
 		Config.LibDefaults.DefaultTktEnctypeIDs = []int32{23} // downgrade to arcfour-hmac-md5 for crackable AS-REPs
-		options.logger.Log.Info("Using downgraded encryption: arcfour-hmac-md5")
+		options.Logger.Log.Info("Using downgraded encryption: arcfour-hmac-md5")
 	}
 	if err != nil {
 		panic(err)
@@ -93,7 +93,7 @@ func NewKerbruteSession(options KerbruteSessionOptions) (k KerbruteSession, err 
 		Verbose:      options.Verbose,
 		SafeMode:     options.SafeMode,
 		HashFile: hashFile,
-		Logger:       options.logger,
+		Logger:       options.Logger,
 	}
 	return k, err
 

@@ -23,6 +23,8 @@ A domain (`-d`) or a domain controller (`--dc`) must be specified. If a Domain C
 
 By default, Kerbrute is multithreaded and uses 10 threads. This can be changed with the `-t` option.
 
+To reduce noise, you can throttle requests with `--rate`, which limits the total number of requests per second sent to the KDC across all threads. For example, `kerbrute userenum -d contoso.com --dc dc.contoso.com --rate 50 users.txt` will enumerate at most 50 usernames per second. Alternatively, `--delay` adds a fixed delay between attempts (single threaded).
+
 Output is logged to stdout, but a log file can be specified with `-o`.
 
 By default, failures are not logged, but that can be changed with `-v`.
@@ -65,6 +67,7 @@ Flags:
       --hash-file string   File to save AS-REP hashes to (if any captured), otherwise just logged
   -h, --help               help for kerbrute
   -o, --output string      File to write logs to. Optional.
+      --rate int           Limit requests per second to the KDC across all threads. 0 means no limit
       --safe               Safe mode. Will abort if any user comes back as locked out. Default: FALSE
   -t, --threads int        Threads to use (default 10)
   -v, --verbose            Log failures and errors

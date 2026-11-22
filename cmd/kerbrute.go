@@ -30,6 +30,7 @@ func init() {
 	rootCmd.PersistentFlags().BoolVar(&safe, "safe", false, "Safe mode. Will abort if any user comes back as locked out. Default: FALSE")
 	rootCmd.PersistentFlags().IntVarP(&threads, "threads", "t", 10, "Threads to use")
 	rootCmd.PersistentFlags().IntVarP(&delay, "delay", "", 0, "Delay in millisecond between each attempt. Will always use single thread if set")
+	rootCmd.PersistentFlags().IntVarP(&rateLimit, "rate", "", 0, "Limit requests per second to the KDC across all threads. 0 means no limit")
 	rootCmd.PersistentFlags().BoolVar(&downgrade, "downgrade", false, "Force downgraded encryption type (arcfour-hmac-md5)")
 	rootCmd.PersistentFlags().StringVar(&hashFileName, "hash-file", "", "File to save AS-REP hashes to (if any captured), otherwise just logged")
 	if delay != 0 {

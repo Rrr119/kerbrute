@@ -16,6 +16,7 @@ var (
 	verbose          bool
 	safe             bool
 	delay            int
+	rateLimit        int
 	threads          int
 	stopOnSuccess    bool
 	userAsPass       = false
@@ -41,6 +42,7 @@ func setupSession(cmd *cobra.Command, args []string) {
 		SafeMode:         safe,
 		HashFilename:     hashFileName,
 		Downgrade: downgrade,
+		Logger:    &logger,
 	}
 	k, err := session.NewKerbruteSession(kOptions)
 	if err != nil {
@@ -55,5 +57,9 @@ func setupSession(cmd *cobra.Command, args []string) {
 	}
 	if delay != 0 {
 		logger.Log.Infof("Delay set. Using single thread and delaying %dms between attempts\n", delay)
+	}
+	limiter = newRateLimiter(rateLimit)
+	if limiter != nil {
+		logger.Log.Infof("Rate limit set to %d requests/second across all threads\n", rateLimit)
 	}
 }
